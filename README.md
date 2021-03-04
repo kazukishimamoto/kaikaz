@@ -1,5 +1,8 @@
 # kaikaz
 
+## What is kaikaz
+This application is simple file server.
+
 ## Build Setup
 
 ```bash

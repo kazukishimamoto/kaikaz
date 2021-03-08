@@ -5,6 +5,7 @@
       <h1 class="title">
         kaikaz
       </h1>
+      <p>写真ファイルサーバー</p>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -15,7 +16,7 @@
           Documentation
         </a>
         <a
-          href="https://github.com/nuxt/nuxt.js"
+          href="https://github.com/kazukishimamoto/kaikaz"
           target="_blank"
           rel="noopener noreferrer"
           class="button--grey"

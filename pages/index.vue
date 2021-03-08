@@ -7,7 +7,9 @@
       </h1>
       <p>写真ファイルサーバー</p>
       <p>現在準備中</p>
-      <button class="button"></button>
+      <nuxt-link to="/images/new">
+        <button class="button is-primary">新規画像登録</button>
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -18,7 +20,7 @@ import Vue from 'vue'
 export default Vue.extend({})
 </script>
 
-<style>
+<style scoped>
 .container {
   margin: 0 auto;
   min-height: 100vh;

@@ -6,24 +6,8 @@
         kaikaz
       </h1>
       <p>写真ファイルサーバー</p>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/kazukishimamoto/kaikaz"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+      <p>現在準備中</p>
+      <button class="button"></button>
     </div>
   </div>
 </template>

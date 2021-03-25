@@ -26,16 +26,24 @@
 export default {
   data () {
     return {
-      imageName: 'No file'
+      imageName: 'No file',
+      files: null
     }
   },
   methods: {
     onFileChange (e) {
-      const files = e.target.files || e.dataTransfer.files
-      this.imageName = files[0].name
+      this.files = e.target.files || e.dataTransfer.files
+      this.imageName = this.files[0].name
     },
     submit () {
       console.log('ファイルアップロード！')
+      if (!this.files) {
+        console.log('File not found')
+        return
+      }
+
+      const file = this.files[0]
+      const storageRef = this.$fire.storage.ref(`/images/${file.name}`).put(file.name)
     }
   }
 }

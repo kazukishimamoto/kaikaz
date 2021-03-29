@@ -8,7 +8,9 @@
       <p>写真ファイルサーバー</p>
       <p>現在準備中</p>
       <nuxt-link to="/images/new">
-        <button class="button is-primary">新規画像登録</button>
+        <button class="button is-primary">
+          新規画像登録
+        </button>
       </nuxt-link>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
+      <img id="myimg" class="NuxtLogo image is-128x128" :src="url">
       <h1 class="title">
         kaikaz
       </h1>
@@ -16,10 +16,28 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
+<script>
+export default {
+  data() {
+    return {
+      url: ''
+    }
+  },
+  mounted() {
+    const pathReference = this.$fire.storage.ref('images/C5679D7D-084D-401B-9B48-1ADDCD021DE3.png')
+    pathReference.getDownloadURL().then(url => {
+      const xhr = new XMLHttpRequest()
+      xhr.responseType = 'blob'
+      xhr.onload = (event) => {
+        const blob = xhr.response
+      }
+      xhr.open('GET', url)
+      xhr.send()
 
-export default Vue.extend({})
+      this.url = url
+    })
+  }
+}
 </script>
 
 <style scoped>
@@ -60,5 +78,16 @@ export default Vue.extend({})
 
 .links {
   padding-top: 15px;
+}
+
+.NuxtLogo {
+  animation: 5s appear;
+  margin: auto;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
 }
 </style>

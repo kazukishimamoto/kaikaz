@@ -20,7 +20,9 @@
 export default {
   data() {
     return {
-      url: ''
+      url: '',
+      images: ['animal_dance_dog.png', 'usagi_youchien.png', 'C5679D7D-084D-401B-9B48-1ADDCD021DE3.png'],
+      index: 0
     }
   },
   mounted() {
@@ -36,6 +38,46 @@ export default {
 
       this.url = url
     })
+  },
+  watch: {
+    url() {
+      setTimeout(() => {
+        console.log('画像チェンジ')
+        this.index = (this.index+1) % 3
+        const pathReference = this.$fire.storage.ref(`images/${this.images[Math.floor(this.index)]}`)
+        pathReference.getDownloadURL().then(url => {
+          const xhr = new XMLHttpRequest()
+          xhr.responseType = 'blob'
+          xhr.onload = (event) => {
+            const blob = xhr.response
+          }
+          xhr.open('GET', url)
+          xhr.send()
+
+          // 1/3で画像が変わらなかったときにwatchが呼ばれなくなる
+          this.url = url
+        })
+      }, 5000);
+    }
+  },
+  methods: {
+    downloadImg() {
+      // 5秒後に画像を更新する
+      setTimeout(() => {
+        const pathReference = this.$fire.storage.ref(`images/${this.images[0]}`)
+        pathReference.getDownloadURL().then(url => {
+          const xhr = new XMLHttpRequest()
+          xhr.responseType = 'blob'
+          xhr.onload = (event) => {
+            const blob = xhr.response
+          }
+          xhr.open('GET', url)
+          xhr.send()
+
+          this.url = url
+        })
+      }, 5000);
+    }
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
+      <img id="myimg" class="NuxtLogo image is-128x128" :src="url">
       <h1 class="title">
         kaikaz
       </h1>
@@ -16,10 +16,55 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
+<script>
+export default {
+  data () {
+    return {
+      url: '',
+      currentImgName: '',
+      images: ['animal_dance_dog.png', 'usagi_youchien.png', 'C5679D7D-084D-401B-9B48-1ADDCD021DE3.png']
+    }
+  },
+  watch: {
+    url () {
+      this.setNextImgName()
+      setTimeout(() => {
+        this.downloadImg(this.currentImgName)
+      }, 7000)
+    }
+  },
+  mounted () {
+    // TODO：画像名のリストを取得する
+    this.currentImgName = this.images[0]
+    this.downloadImg(this.currentImgName)
+  },
+  methods: {
+    downloadImg (imageName) {
+      const pathReference = this.$fire.storage.ref(`images/${imageName}`)
+      pathReference.getDownloadURL().then((url) => {
+        const xhr = new XMLHttpRequest()
+        xhr.onload = () => {
+        }
+        xhr.open('GET', url)
+        xhr.send()
 
-export default Vue.extend({})
+        this.url = url
+      })
+    },
+    setNextImgName () {
+      let rand
+      let loopNum = 0
+      do {
+        rand = Math.floor(Math.random() * this.images.length)
+        loopNum++
+      } while (this.currentImgName === this.images[rand] && loopNum < 10000)
+      this.currentImgName = this.images[rand]
+      if (loopNum >= 10000) {
+        alert('画像が取得できませんでした.ページをリロードしてください')
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -60,5 +105,16 @@ export default Vue.extend({})
 
 .links {
   padding-top: 15px;
+}
+
+.NuxtLogo {
+  animation: 5s appear;
+  margin: auto;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
 }
 </style>

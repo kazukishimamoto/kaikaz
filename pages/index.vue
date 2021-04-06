@@ -18,34 +18,32 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       url: '',
       currentImgName: '',
-      images: ['animal_dance_dog.png', 'usagi_youchien.png', 'C5679D7D-084D-401B-9B48-1ADDCD021DE3.png'],
+      images: ['animal_dance_dog.png', 'usagi_youchien.png', 'C5679D7D-084D-401B-9B48-1ADDCD021DE3.png']
     }
   },
-  mounted() {
+  watch: {
+    url () {
+      this.setNextImgName()
+      setTimeout(() => {
+        this.downloadImg(this.currentImgName)
+      }, 7000)
+    }
+  },
+  mounted () {
     // TODO：画像名のリストを取得する
     this.currentImgName = this.images[0]
     this.downloadImg(this.currentImgName)
   },
-  watch: {
-    url() {
-      this.setNextImgName()
-      setTimeout(() => {
-        this.downloadImg(this.currentImgName)
-      }, 7000);
-    }
-  },
   methods: {
-    downloadImg(imageName) {
+    downloadImg (imageName) {
       const pathReference = this.$fire.storage.ref(`images/${imageName}`)
-      pathReference.getDownloadURL().then(url => {
+      pathReference.getDownloadURL().then((url) => {
         const xhr = new XMLHttpRequest()
-        xhr.responseType = 'blob'
-        xhr.onload = (event) => {
-          const blob = xhr.response
+        xhr.onload = () => {
         }
         xhr.open('GET', url)
         xhr.send()
@@ -53,12 +51,13 @@ export default {
         this.url = url
       })
     },
-    setNextImgName() {
-      let rand, loopNum=0
+    setNextImgName () {
+      let rand
+      let loopNum = 0
       do {
-        rand = Math.floor(Math.random()*this.images.length)
+        rand = Math.floor(Math.random() * this.images.length)
         loopNum++
-      } while (this.currentImgName == this.images[rand] && loopNum < 10000)
+      } while (this.currentImgName === this.images[rand] && loopNum < 10000)
       this.currentImgName = this.images[rand]
       if (loopNum >= 10000) {
         alert('画像が取得できませんでした.ページをリロードしてください')

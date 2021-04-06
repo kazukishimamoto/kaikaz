@@ -19,7 +19,7 @@
     <button class="button submit" @click="submit">
       送信
     </button>
-    <div class="preview" v-for="(url, index) in urls" :key="index">
+    <div v-for="(url, index) in urls" :key="index" class="preview">
       <img :src="url">
       <p>{{ files[index].name }}</p>
     </div>
@@ -42,12 +42,11 @@ export default {
 
       this.files = e.target.files || e.dataTransfer.files
       this.imageName = `chose ${this.files.length} images`
-      this.files.forEach(file => {
+      this.files.forEach((file) => {
         this.urls.push(URL.createObjectURL(file))
-      });
+      })
     },
     submit () {
-      console.log('ファイルアップロード！')
       if (!this.files) {
         console.log('File not found')
         return
@@ -55,11 +54,13 @@ export default {
 
       const storage = this.$fire.storage.ref()
       let count = 1
-      this.files.forEach(file => {
-        storage.child(`images/${file.name}`).put(file).then(snapshot => {
+      this.files.forEach((file) => {
+        storage.child(`images/${file.name}`).put(file).then((snapshot) => {
           console.log('Uploaded a blob or file!')
+          console.log(snapshot) // リンター対策：今後snapshot使うと思うので
+
           // ファイル数をカウントして、最後のファイルがアップロードされたときだけ画面遷移する
-          if (count == this.files.length) {
+          if (count === this.files.length) {
             alert('done')
             location.reload()
           }

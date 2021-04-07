@@ -6,7 +6,7 @@
         kaikaz
       </h1>
       <p>写真ファイルサーバー</p>
-      <p>現在準備中</p>
+      <p>{{ this.images }}</p>
       <nuxt-link to="/images/new">
         <button class="button is-primary">
           新規画像登録
@@ -22,7 +22,7 @@ export default {
     return {
       url: '',
       currentImgName: '',
-      images: ['animal_dance_dog.png', 'usagi_youchien.png', 'C5679D7D-084D-401B-9B48-1ADDCD021DE3.png']
+      images: []
     }
   },
   watch: {
@@ -34,9 +34,7 @@ export default {
     }
   },
   mounted () {
-    // TODO：画像名のリストを取得する
-    this.currentImgName = this.images[0]
-    this.downloadImg(this.currentImgName)
+    this.initData()
   },
   methods: {
     downloadImg (imageName) {
@@ -62,6 +60,23 @@ export default {
       if (loopNum >= 10000) {
         alert('画像が取得できませんでした.ページをリロードしてください')
       }
+    },
+    async getImgList () {
+      const imagesRef = this.$fire.firestore.collection('images')
+      try {
+        await imagesRef.get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            this.images.push(doc.data().name)
+          })
+        })
+      } catch (e) {
+        alert(e)
+      }
+    },
+    async initData () {
+      await this.getImgList()
+      this.currentImgName = this.images[0]
+      this.downloadImg(this.currentImgName)
     }
   }
 }

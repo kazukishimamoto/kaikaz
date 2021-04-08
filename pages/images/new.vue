@@ -52,9 +52,16 @@ export default {
         return
       }
 
+      const imagesRef = this.$fire.firestore.collection('images')
       const storage = this.$fire.storage.ref()
       let count = 1
       this.files.forEach((file) => {
+        // イメージ名の保存
+        imagesRef.add({
+          name: file.name
+        })
+
+        // 画像のアップロード
         storage.child(`images/${file.name}`).put(file).then((snapshot) => {
           console.log('Uploaded a blob or file!')
           console.log(snapshot) // リンター対策：今後snapshot使うと思うので

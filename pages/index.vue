@@ -62,6 +62,7 @@ export default {
       }
     },
     async getImgList () {
+      // TODO: storageからイメージ名一覧取得できるのでそっち使う方が良さそう
       const imagesRef = this.$fire.firestore.collection('images')
       try {
         await imagesRef.get().then((querySnapshot) => {

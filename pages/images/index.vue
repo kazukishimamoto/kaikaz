@@ -1,8 +1,10 @@
 <template>
   <div>
     <h1>画像一覧</h1>
-    <div class="imgs">
-      <img v-for="url in urls" :key="url" :src="url">
+    <p>{{ imageNames }}</p>
+
+    <div class="columns">
+      <img v-for="url in urls" :key="url" :src="url" class="image column">
     </div>
   </div>
 </template>
@@ -44,13 +46,8 @@ export default {
 </script>
 
 <style scoped>
-.imgs {
-  display: inline-block;
-  height: 150px;
-}
-.imgs img {
-  height: 100%;
-  margin-right: 15px;
-  margin-bottom: 15px;
+img {
+  width: 100px;
+  margin-right: 10px;
 }
 </style>

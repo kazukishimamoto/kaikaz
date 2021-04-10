@@ -7,11 +7,18 @@
       </h1>
       <p>写真ファイルサーバー</p>
       <p>{{ this.images }}</p>
-      <nuxt-link to="/images/new">
-        <button class="button is-primary">
-          新規画像登録
-        </button>
-      </nuxt-link>
+      <div class="link">
+        <nuxt-link to="/images/new">
+          <button class="button is-primary">
+            新規画像登録
+          </button>
+        </nuxt-link>
+        <nuxt-link to="/images">
+            <button class="button is-primary">
+              画像一覧ページ
+            </button>
+        </nuxt-link>
+      </div>
     </div>
   </div>
 </template>

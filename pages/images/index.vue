@@ -11,7 +11,7 @@
               </figure>
             </div>
           </div>
-          <label>{{ imageNames[x+y*3] }}</label>
+          <label>{{ imageNames[x+y*3] ? imageNames[x+y*3] : 'no image' }}</label>
         </div>
       </div>
     </div>
@@ -58,7 +58,10 @@ export default {
         for (let y = 0; y < this.imageNames.length/3; y++) {
           const tmp = []
           for (let x = 0; x < 3; x++) {
-            tmp.push(this.urls[x+y*3])
+            if (this.urls[x+y*3])
+              tmp.push(this.urls[x+y*3])
+            else
+              tmp.push('https://bulma.io/images/placeholders/1280x960.png')
           }
           imageTable.push(tmp)
         }

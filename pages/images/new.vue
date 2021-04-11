@@ -48,7 +48,7 @@ export default {
     },
     submit () {
       if (!this.files) {
-        console.log('File not found')
+        alert('File not found')
         return
       }
 
@@ -63,7 +63,6 @@ export default {
 
         // 画像のアップロード
         storage.child(`images/${file.name}`).put(file).then((snapshot) => {
-          console.log('Uploaded a blob or file!')
           console.log(snapshot) // リンター対策：今後snapshot使うと思うので
 
           // ファイル数をカウントして、最後のファイルがアップロードされたときだけ画面遷移する

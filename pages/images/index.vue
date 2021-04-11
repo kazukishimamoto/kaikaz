@@ -11,7 +11,7 @@
               </figure>
             </div>
           </div>
-          <label>{{ imageNames[x+y*3] ? imageNames[x+y*3] : 'no image' }}</label>
+          <label>{{ imageNames[x+y*3] ? imageNames[x+y*3] : 'No Image' }}</label>
         </div>
       </div>
     </div>
@@ -61,7 +61,7 @@ export default {
             if (this.urls[x+y*3])
               tmp.push(this.urls[x+y*3])
             else
-              tmp.push('https://bulma.io/images/placeholders/1280x960.png')
+              tmp.push('https://corp.zaif.jp/wp-content/uploads/2017/01/noimage.png')
           }
           imageTable.push(tmp)
         }

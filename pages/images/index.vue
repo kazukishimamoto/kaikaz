@@ -3,7 +3,7 @@
     <h1>画像一覧</h1>
     <div v-for="(images,y) in imageTable" :key="y" class="tile is-ancestor">
       <div class="tile is-parent">
-        <div v-for="(image,x) in images" :key="image" class="tile is-child box">
+        <div v-for="(image,x) in images" :key="y+image+x" class="tile is-child box">
           <div class="card">
             <div class="card-image">
               <figure class="image">
@@ -81,5 +81,10 @@ figure img {
 label {
   text-align: center;
   display: block;
+}
+
+.tile .is-child:hover {
+  cursor: pointer;
+  background-color: lightgoldenrodyellow;
 }
 </style>

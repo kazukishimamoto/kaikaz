@@ -16,9 +16,12 @@
     </div>
     <ul>
       <li v-for="index in selectedImgIndex" :key="index">
-        {{ imageNames[index] }}
+        {{ images[index].name }}
       </li>
     </ul>
+    <button v-show="showDeleteButton" class="button is-danger" @click="showDeleteDialog">
+      選択した画像を削除
+    </button>
   </div>
 </template>
 
@@ -26,29 +29,34 @@
 export default {
   data () {
     return {
-      imageNames: [],
-      urls: [],
-      selectedImgIndex: []
+      selectedImgIndex: [],
+      images: []
     }
   },
   computed: {
     rowsNum () {
       return Math.ceil(this.urls.length / 3)
+    },
+    urls () {
+      return this.images.map(image => image.url)
+    },
+    showDeleteButton () {
+      return !!this.selectedImgIndex.length
     }
   },
   async mounted () {
     // イメージ名の取得
-    this.imageNames = []
+    const imageNames = []
     const listRef = this.$fire.storage.ref().child('images')
     await listRef.listAll().then((res) => {
       res.items.forEach((itemsRef) => {
-        this.imageNames.push(itemsRef.name)
+        imageNames.push(itemsRef.name)
       })
     })
 
     // 画像一覧取得
-    this.imageNames.forEach((imgName) => {
-      listRef.child(`${imgName}`).getDownloadURL().then((url) => {
+    imageNames.forEach((name) => {
+      listRef.child(`${name}`).getDownloadURL().then((url) => {
         const xhr = new XMLHttpRequest()
         xhr.onload = () => {
         }
@@ -56,7 +64,10 @@ export default {
         xhr.open('GET', url)
         xhr.send()
 
-        this.urls.push(url)
+        this.images.push({
+          url,
+          name
+        })
       })
     })
   },
@@ -71,6 +82,27 @@ export default {
       } else {
         this.selectedImgIndex.push(index)
       }
+    },
+    showDeleteDialog () {
+      if (!this.selectedImgIndex.length) {
+        alert('画像が選択されていません')
+        return
+      }
+      const response = confirm('選択した画像を削除しますか？')
+      if (response === true) {
+        this.deleteImgHandler()
+      }
+    },
+    deleteImgHandler () {
+      // 画像への参照を作成する
+      const listRef = this.$fire.storage.ref().child('images')
+
+      this.selectedImgIndex.forEach((index) => {
+        listRef.child(`${this.images[index].name}`).delete()
+      })
+
+      this.selectedImgIndex = []
+      location.reload()
     }
   }
 }

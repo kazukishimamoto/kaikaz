@@ -1,20 +1,27 @@
 <template>
   <div class="container">
-    <h1>画像一覧</h1>
-    <div v-for="(images,y) in imageTable" :key="y" class="tile is-ancestor">
-      <div class="tile is-parent">
-        <div v-for="(image,x) in images" :key="y+image+x" class="tile is-child box">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image">
-                <img :src="image" :alt="image">
-              </figure>
-            </div>
+    <div class="content">
+      <h1>画像一覧</h1>
+    </div>
+    <div v-for="y in rowsNum" :key="y" class="columns">
+      <div v-for="x in 3" :key="x" class="column is-one-third">
+        <div class="card" :class="{ selected: isSelected((x-1)+3*(y-1)) }" @click="selectImgHandler((x-1)+3*(y-1))">
+          <div class="card-image">
+            <figure v-if="urls[(x-1)+3*(y-1)]" class="image">
+              <img :src="urls[(x-1)+3*(y-1)]">
+            </figure>
           </div>
-          <label>{{ imageNames[x+y*3] ? imageNames[x+y*3] : 'No Image' }}</label>
         </div>
       </div>
     </div>
+    <ul>
+      <li v-for="index in selectedImgIndex" :key="index">
+        {{ images[index].name }}
+      </li>
+    </ul>
+    <button v-show="showDeleteButton" class="button is-danger" @click="showDeleteDialog">
+      選択した画像を削除
+    </button>
   </div>
 </template>
 
@@ -22,41 +29,34 @@
 export default {
   data () {
     return {
-      imageNames: [],
-      urls: []
+      selectedImgIndex: [],
+      images: []
     }
   },
   computed: {
-    imageTable () {
-      const imageTable = []
-
-      if (this.urls) {
-        for (let y = 0; y < this.imageNames.length / 3; y++) {
-          const tmp = []
-          for (let x = 0; x < 3; x++) {
-            if (this.urls[x + y * 3]) { tmp.push(this.urls[x + y * 3]) } else { tmp.push('https://corp.zaif.jp/wp-content/uploads/2017/01/noimage.png') }
-          }
-          imageTable.push(tmp)
-        }
-        return imageTable
-      }
-
-      return imageTable
+    rowsNum () {
+      return Math.ceil(this.urls.length / 3)
+    },
+    urls () {
+      return this.images.map(image => image.url)
+    },
+    showDeleteButton () {
+      return !!this.selectedImgIndex.length
     }
   },
   async mounted () {
     // イメージ名の取得
-    this.imageNames = []
+    const imageNames = []
     const listRef = this.$fire.storage.ref().child('images')
     await listRef.listAll().then((res) => {
       res.items.forEach((itemsRef) => {
-        this.imageNames.push(itemsRef.name)
+        imageNames.push(itemsRef.name)
       })
     })
 
     // 画像一覧取得
-    this.imageNames.forEach((imgName) => {
-      listRef.child(`${imgName}`).getDownloadURL().then((url) => {
+    imageNames.forEach((name) => {
+      listRef.child(`${name}`).getDownloadURL().then((url) => {
         const xhr = new XMLHttpRequest()
         xhr.onload = () => {
         }
@@ -64,9 +64,46 @@ export default {
         xhr.open('GET', url)
         xhr.send()
 
-        this.urls.push(url)
+        this.images.push({
+          url,
+          name
+        })
       })
     })
+  },
+  methods: {
+    isSelected (index) {
+      if (!(this.selectedImgIndex.find(i => i === index) === undefined)) { return true }
+      return false
+    },
+    selectImgHandler (index) {
+      if (this.isSelected(index)) {
+        this.selectedImgIndex = this.selectedImgIndex.filter(img => img !== index)
+      } else {
+        this.selectedImgIndex.push(index)
+      }
+    },
+    showDeleteDialog () {
+      if (!this.selectedImgIndex.length) {
+        alert('画像が選択されていません')
+        return
+      }
+      const response = confirm('選択した画像を削除しますか？')
+      if (response === true) {
+        this.deleteImgHandler()
+      }
+    },
+    deleteImgHandler () {
+      // 画像への参照を作成する
+      const listRef = this.$fire.storage.ref().child('images')
+
+      this.selectedImgIndex.forEach((index) => {
+        listRef.child(`${this.images[index].name}`).delete()
+      })
+
+      this.selectedImgIndex = []
+      location.reload()
+    }
   }
 }
 </script>
@@ -76,15 +113,14 @@ figure img {
   width: 480px;
   height: 240px;
   object-fit: contain;
+  padding: 10px;
 }
 
-label {
-  text-align: center;
-  display: block;
-}
-
-.tile .is-child:hover {
+.card:hover {
   cursor: pointer;
-  background-color: lightgoldenrodyellow;
+}
+
+.selected {
+  background-color: lightpink;
 }
 </style>

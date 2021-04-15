@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <div>
-      <img id="myimg" class="NuxtLogo image is-128x128" :src="url">
+      <figure>
+        <img style="height: 100vh;" id="myimg" class="NuxtLogo image" :src="url">
+      </figure>
       <h1 class="title">
         kaikaz
       </h1>

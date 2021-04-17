@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <dir class="sentence">
+    <dir class="hoge">
       <p>本日はお越しいただきありがとうございます</p>
       <p>送信した写真はスクリーンに投影されます</p>
     </dir>
@@ -15,9 +15,9 @@
             画像を選択
           </span>
         </span>
-        <!-- <span class="file-name">
+        <span class="file-name">
           {{ imageName }}
-        </span> -->
+        </span>
       </label>
     </div>
     <button class="button submit" @click="submit">
@@ -34,7 +34,7 @@
 export default {
   data () {
     return {
-      imageName: '',
+      imageName: 'No File',
       files: null,
       urls: []
     }
@@ -96,7 +96,7 @@ export default {
                   url("https://i.pinimg.com/originals/78/a8/a3/78a8a3213ce2954cee241e43dbd578cc.jpg");
 }
 
-.sentence {
+.hoge {
   margin-bottom: 30px;
   font-size: 20px;
   /* font-weight: bold; */

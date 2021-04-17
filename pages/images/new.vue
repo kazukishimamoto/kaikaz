@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <dir class="hoge">
+    <dir class="sentense">
       <p>本日はお越しいただきありがとうございます</p>
       <p>送信した写真はスクリーンに投影されます</p>
     </dir>
@@ -96,10 +96,10 @@ export default {
                   url("https://i.pinimg.com/originals/78/a8/a3/78a8a3213ce2954cee241e43dbd578cc.jpg");
 }
 
-.hoge {
+.sentense {
   margin-bottom: 30px;
-  font-size: 20px;
-  /* font-weight: bold; */
+  font-size: 15px;
+  padding: 0;
 }
 
 .submit {

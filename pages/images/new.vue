@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <dir class="sentence">
+      <p>本日はお越しいただきありがとうございます</p>
+      <p>送信した写真はスクリーンに投影されます</p>
+    </dir>
     <div class="file has-name">
       <label class="file-label">
         <input class="file-input" type="file" multiple name="resume" @change="onFileChange">
@@ -8,12 +12,12 @@
             <i class="fas fa-upload" />
           </span>
           <span class="file-label">
-            Choose a file…
+            画像を選択
           </span>
         </span>
-        <span class="file-name">
+        <!-- <span class="file-name">
           {{ imageName }}
-        </span>
+        </span> -->
       </label>
     </div>
     <button class="button submit" @click="submit">
@@ -30,7 +34,7 @@
 export default {
   data () {
     return {
-      imageName: 'No file',
+      imageName: '',
       files: null,
       urls: []
     }
@@ -90,6 +94,12 @@ export default {
   background-size: cover;
   background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
                   url("https://i.pinimg.com/originals/78/a8/a3/78a8a3213ce2954cee241e43dbd578cc.jpg");
+}
+
+.sentence {
+  margin-bottom: 30px;
+  font-size: 20px;
+  /* font-weight: bold; */
 }
 
 .submit {

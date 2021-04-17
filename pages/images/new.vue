@@ -87,6 +87,9 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
+  background-size: cover;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+                  url("https://i.pinimg.com/originals/78/a8/a3/78a8a3213ce2954cee241e43dbd578cc.jpg");
 }
 
 .submit {

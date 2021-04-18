@@ -4,28 +4,34 @@
       <p>本日はお越しいただきありがとうございます</p>
       <p>送信した写真はスクリーンに投影されます</p>
     </dir>
-    <div class="file has-name">
+
+    <div class="file is-boxed">
       <label class="file-label">
-        <input class="file-input" type="file" multiple name="resume" @change="onFileChange">
+        <input class="file-input" type="file" name="resume" @change="onFileChange" multiple>
         <span class="file-cta">
           <span class="file-icon">
-            <i class="fas fa-upload" />
+            <i class="fas fa-upload"></i>
           </span>
           <span class="file-label">
-            画像を選択
+            画像を選択する
           </span>
-        </span>
-        <span class="file-name">
-          {{ imageName }}
         </span>
       </label>
     </div>
+
     <button class="button submit" @click="submit">
       送信
     </button>
+
     <div v-for="(url, index) in urls" :key="index" class="preview">
-      <img :src="url">
-      <p>{{ files[index].name }}</p>
+      <div class="card">
+        <div class="card-image">
+          <figure class="image">
+            <img :src="url">
+          </figure>
+        </div>
+        <p>{{ files[index].name }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -92,21 +98,30 @@ export default {
   align-items: center;
   text-align: center;
   background-size: cover;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-                  url("https://i.pinimg.com/originals/78/a8/a3/78a8a3213ce2954cee241e43dbd578cc.jpg");
+  background-image: url("../../assets/bg.jpg");
+  background-color:rgba(255,255,255,0.5);
+  background-blend-mode:lighten;
 }
 
 .sentense {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-size: 15px;
   padding: 0;
 }
 
 .submit {
-  margin-top: 10px;
+  margin: 10px 0;
 }
 
 .preview {
   margin-bottom: 10px;
+}
+
+.card {
+  min-width: 375px;
+}
+
+img {
+  padding: 10px;
 }
 </style>

@@ -22,6 +22,10 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  background-size: cover;
+  background-image: url("../assets/bg.jpg");
+  background-color:rgba(255,255,255,0.5);
+  background-blend-mode:lighten;
 }
 
 *,

@@ -91,10 +91,6 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-size: cover;
-  background-image: url("../../assets/bg.jpg");
-  background-color:rgba(255,255,255,0.5);
-  background-blend-mode:lighten;
 }
 
 .sentense {

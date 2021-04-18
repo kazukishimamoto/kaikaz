@@ -17,6 +17,7 @@ export default {
   },
 
   ssr: false,
+  telemetry: false,
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
@@ -55,7 +56,6 @@ export default {
         services: {
           auth: true,
           storage: true,
-          firestore: true
         }
       }
     ]

@@ -2,7 +2,7 @@
   <div class="container">
     <div>
       <figure>
-        <img style="height: 100vh;" id="myimg" class="NuxtLogo image" :src="url">
+        <img id="myimg" style="height: 100vh;" class="NuxtLogo image" :src="url">
       </figure>
       <h1 class="title">
         kaikaz
@@ -34,9 +34,10 @@ export default {
     }
   },
   watch: {
-    url () {
-      this.setNextImgName()
+    async url () {
+      await this.getImgList()
       setTimeout(() => {
+        this.setNextImgName()
         this.downloadImg(this.currentImgName)
       }, 7000)
     }
@@ -55,6 +56,8 @@ export default {
         xhr.send()
 
         this.url = url
+      }).catch(() => {
+        location.reload()
       })
     },
     setNextImgName () {
@@ -70,6 +73,8 @@ export default {
       }
     },
     async getImgList () {
+      this.images = []
+
       const listRef = this.$fire.storage.ref().child('images')
       try {
         await listRef.listAll().then((res) => {

@@ -55,7 +55,7 @@ export default {
         },
         services: {
           auth: true,
-          storage: true,
+          storage: true
         }
       }
     ]

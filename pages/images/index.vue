@@ -2,6 +2,7 @@
   <div class="container">
     <div class="content">
       <h1>画像一覧</h1>
+      <a href="/">トップページ</a>
     </div>
     <div v-for="y in rowsNum" :key="y" class="columns">
       <div v-for="x in 3" :key="x" class="column is-one-third">

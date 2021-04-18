@@ -7,7 +7,6 @@
       <h1 class="title">
         kaikaz
       </h1>
-      <p>写真ファイルサーバー</p>
       <div class="link">
         <nuxt-link to="/images/new">
           <button class="button is-primary">

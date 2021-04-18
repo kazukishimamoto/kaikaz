@@ -7,10 +7,10 @@
 
     <div class="file is-boxed">
       <label class="file-label">
-        <input class="file-input" type="file" name="resume" @change="onFileChange" multiple>
+        <input class="file-input" type="file" name="resume" multiple @change="onFileChange">
         <span class="file-cta">
           <span class="file-icon">
-            <i class="fas fa-upload"></i>
+            <i class="fas fa-upload" />
           </span>
           <span class="file-label">
             画像を選択する
@@ -58,26 +58,20 @@ export default {
     },
     submit () {
       if (!this.files) {
-        alert('File not found')
+        alert('画像を選択してください')
         return
       }
 
-      const imagesRef = this.$fire.firestore.collection('images')
       const storage = this.$fire.storage.ref()
       let count = 1
       this.files.forEach((file) => {
-        // イメージ名の保存
-        imagesRef.add({
-          name: file.name
-        })
-
         // 画像のアップロード
         storage.child(`images/${file.name}`).put(file).then((snapshot) => {
           console.log(snapshot) // リンター対策：今後snapshot使うと思うので
 
           // ファイル数をカウントして、最後のファイルがアップロードされたときだけ画面遷移する
           if (count === this.files.length) {
-            alert('done')
+            alert('画像が送信されました\nスクリーンに投影されるのをお待ち下さい')
             location.reload()
           }
           count++
@@ -119,6 +113,7 @@ export default {
 
 .card {
   min-width: 375px;
+  width: 450px;
 }
 
 img {

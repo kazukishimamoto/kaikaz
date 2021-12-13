@@ -38,7 +38,7 @@ export default {
       setTimeout(() => {
         this.setNextImgName()
         this.downloadImg(this.currentImgName)
-      }, 7000)
+      }, 2000)
     }
   },
   mounted () {
@@ -48,11 +48,11 @@ export default {
     downloadImg (imageName) {
       const pathReference = this.$fire.storage.ref(`images/${imageName}`)
       pathReference.getDownloadURL().then((url) => {
-        const xhr = new XMLHttpRequest()
-        xhr.onload = () => {
-        }
-        xhr.open('GET', url)
-        xhr.send()
+        // const xhr = new XMLHttpRequest()
+        // xhr.onload = () => {
+        // }
+        // // xhr.open('GET', url)
+        // // xhr.send()
 
         this.url = url
       }).catch(() => {

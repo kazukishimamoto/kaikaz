@@ -1,7 +1,7 @@
 # kaikaz
 
 ## What is kaikaz
-This application is simple file server.
+This application is simple image server.
 
 ## Build Setup
 
